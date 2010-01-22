@@ -204,7 +204,7 @@ JsUnitTestManager.prototype.start = function () {
 
     this._timeRunStarted = new Date();
     this.initialize();
-    setTimeout('top.testManager._nextPage();', JsUnitTestManager.TIMEOUT_LENGTH);
+    setTimeout(function(){top.testManager._nextPage();}, JsUnitTestManager.TIMEOUT_LENGTH);
 }
 
 JsUnitTestManager.prototype._determineBaseUrl = function (url) {
@@ -303,7 +303,7 @@ JsUnitTestManager.prototype._runTest = function () {
                 this.testFrame.startTime = new Date();
                 this.testFrame.setUpPage();
                 // try test again later
-                setTimeout('top.testManager._runTest()', JsUnitTestManager.SETUPPAGE_INTERVAL);
+                setTimeout(function(){top.testManager._runTest();}, JsUnitTestManager.SETUPPAGE_INTERVAL);
                 return;
             }
 
@@ -318,7 +318,7 @@ JsUnitTestManager.prototype._runTest = function () {
                     this.testFrame.startTime = (new Date());
                 }
                 // try test again later
-                setTimeout('top.testManager._runTest()', JsUnitTestManager.SETUPPAGE_INTERVAL);
+                setTimeout(function(){top.testManager._runTest();}, JsUnitTestManager.SETUPPAGE_INTERVAL);
                 return;
             }
         }
@@ -336,7 +336,7 @@ JsUnitTestManager.prototype._runTest = function () {
     this.totalCount++;
     this.updateProgressIndicators();
     this._testIndex++;
-    setTimeout('if (top.testManager) top.testManager._runTest()', JsUnitTestManager.TIMEOUT_LENGTH);
+    setTimeout(function(){if (top.testManager) {top.testManager._runTest();}}, JsUnitTestManager.TIMEOUT_LENGTH);
 }
 
 JsUnitTestManager.prototype.setWindowStatus = function(string) {
@@ -436,7 +436,7 @@ JsUnitTestManager.prototype.abort = function () {
 JsUnitTestManager.prototype.getTimeout = function () {
     var result = JsUnitTestManager.TESTPAGE_WAIT_SEC;
     try {
-        result = eval(this.timeout.value);
+        result = window.timeout.value;
     }
     catch (e) {
     }
@@ -446,7 +446,7 @@ JsUnitTestManager.prototype.getTimeout = function () {
 JsUnitTestManager.prototype.getsetUpPageTimeout = function () {
     var result = JsUnitTestManager.SETUPPAGE_TIMEOUT;
     try {
-        result = eval(this.setUpPageTimeout.value);
+        result = window.setUpPageTimeout.value;
     }
     catch (e) {
     }
@@ -572,7 +572,7 @@ JsUnitTestManager.prototype._callBackWhenPageIsLoaded = function () {
         }
     }
     if (!this._isTestFrameLoaded()) {
-        setTimeout('if (top.testManager) top.testManager._callBackWhenPageIsLoaded();', JsUnitTestManager.TIMEOUT_LENGTH);
+        setTimeout(function(){if (top.testManager) {top.testManager._callBackWhenPageIsLoaded();}}, JsUnitTestManager.TIMEOUT_LENGTH);
         return;
     }
     this.doneLoadingPage(this._currentTestPage);

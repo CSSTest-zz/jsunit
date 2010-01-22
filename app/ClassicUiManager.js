@@ -46,7 +46,7 @@ JsUnit.ClassicUiManager.prototype.getTestFileName = function() {
 }
 
 JsUnit.ClassicUiManager.prototype.getTraceLevel = function() {
-    var levelNumber = eval(this.traceLevel.value);
+    var levelNumber = (window.frames[0].frames[0].document.testRunnerForm.traceLevel.selectedIndex !== null) ? window.frames[0].frames[0].document.testRunnerForm.traceLevel.selectedIndex : window.frames(0).frames(0).document.testRunnerForm.traceLevel.selectedIndex;
     return JsUnitTraceLevel.findByLevelNumber(levelNumber);
 }
 
